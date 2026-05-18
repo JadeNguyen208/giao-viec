@@ -88,15 +88,35 @@ tr:hover td { background: var(--row-hover) !important; }
 /* ƯU TIÊN */
 .priority-badge { display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px; border-radius: 20px; font-size: 14px; font-weight: 700; white-space: nowrap; }
 .priority-badge .p-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.priority-badge.p-khan { background: #fff0f0; color: #c0392b; border: 1.5px solid #f0b8b8; }
-.priority-badge.p-khan .p-dot { background: #e74c3c; box-shadow: 0 0 0 2px rgba(231,76,60,0.25); }
-.priority-badge.p-quan { background: #fff5ec; color: #c05a00; border: 1.5px solid #f5c89a; }
-.priority-badge.p-quan .p-dot { background: #e67e22; box-shadow: 0 0 0 2px rgba(230,126,34,0.25); }
+.priority-badge.p-kqt { background: #fff0f0; color: #9b1515; border: 1.5px solid #f0b8b8; }
+.priority-badge.p-kqt .p-dot { background: #c0392b; box-shadow: 0 0 0 2px rgba(192,57,43,0.25); }
+.priority-badge.p-khan { background: #fff4ec; color: #b84d00; border: 1.5px solid #f5c4a0; }
+.priority-badge.p-khan .p-dot { background: #e67e22; box-shadow: 0 0 0 2px rgba(230,126,34,0.25); }
+.priority-badge.p-quan { background: #fffbe6; color: #8a6000; border: 1.5px solid #f0dc80; }
+.priority-badge.p-quan .p-dot { background: #f0c000; box-shadow: 0 0 0 2px rgba(240,192,0,0.25); }
 .priority-badge.p-binh { background: #eaf7f0; color: #1a6b3a; border: 1.5px solid #a0d8b0; }
 .priority-badge.p-binh .p-dot { background: #27ae60; box-shadow: 0 0 0 2px rgba(39,174,96,0.25); }
 
-.priority-select { height: 38px; border: 1.5px solid var(--input-border); border-radius: 20px; padding: 0 30px 0 13px; font-size: 15px; font-family: inherit; font-weight: 700; color: var(--text-main); background: #fff; outline: none; appearance: none; -webkit-appearance: none; background-image: var(--caret-svg); background-repeat: no-repeat; background-position: right 10px center; background-size: 13px 13px; cursor: pointer; transition: all 0.15s; width: 100%; }
-.priority-select:focus { border-color: var(--input-focus); }
+/* Priority dropdown */
+.pdd-wrap { position: relative; }
+.pdd-trigger { height: 42px; border: 1.5px solid var(--input-border); border-radius: 9px; padding: 0 36px 0 13px; font-size: 15px; font-family: inherit; font-weight: 700; color: var(--text-main); background: #fff; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: border-color 0.15s; user-select: none; position: relative; }
+.pdd-trigger:hover, .pdd-trigger.open { border-color: var(--input-focus); }
+.pdd-trigger .p-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.pdd-trigger-caret { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #a08060; transition: transform 0.18s; pointer-events: none; }
+.pdd-trigger-caret.open { transform: translateY(-50%) rotate(180deg); }
+.pdd-popup { position: absolute; top: calc(100% + 5px); left: 0; right: 0; background: #fff; border: 1.5px solid var(--input-border); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); z-index: 650; overflow: hidden; display: none; }
+.pdd-popup.open { display: block; }
+.pdd-option { display: flex; align-items: center; gap: 11px; padding: 11px 15px; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text-main); transition: background 0.1s; position: relative; }
+.pdd-option:not(:last-child) { border-bottom: 1px solid #f0ece4; }
+.pdd-option:hover { background: #fdf8ee; }
+.pdd-option.selected { background: #fdf3e0; }
+.pdd-option .p-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.pdd-option .pdd-radio { width: 17px; height: 17px; border-radius: 50%; border: 2px solid #c8b890; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-left: auto; transition: all 0.15s; }
+.pdd-option.selected .pdd-radio { border-color: #7a3a00; background: #7a3a00; }
+.pdd-option.selected .pdd-radio::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; display: block; }
+.pdd-option-label { flex: 1; }
+
+/* Priority selector trong form — replaced by pdd-wrap above */
 
 .status-select { height: 38px; border: 1.5px solid var(--input-border); border-radius: 20px; padding: 0 30px 0 13px; font-size: 17px; font-family: inherit; font-weight: 700; color: var(--text-main); background: #fff; outline: none; appearance: none; -webkit-appearance: none; background-image: var(--caret-svg); background-repeat: no-repeat; background-position: right 10px center; background-size: 13px 13px; cursor: pointer; transition: all 0.15s; min-width: 170px; }
 .status-select:focus { border-color: var(--input-focus); }
@@ -132,7 +152,8 @@ tr:hover td { background: var(--row-hover) !important; }
 
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30,10,0,0.5); z-index: 500; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
 .modal-overlay.show { display: flex; }
-.modal { background: #fff; border-radius: 18px; width: 100%; max-width: 640px; box-shadow: 0 20px 80px rgba(0,0,0,0.25); margin: auto; overflow: hidden; }
+/* ĐÃ SỬA: max-width tăng từ 640px lên 860px */
+.modal { background: #fff; border-radius: 18px; width: 100%; max-width: 860px; box-shadow: 0 20px 80px rgba(0,0,0,0.25); margin: auto; overflow: hidden; }
 .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 26px 16px; border-bottom: 1.5px solid var(--border); background: #faf7f2; }
 .modal-title { font-size: 18px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
 .modal-title svg { width: 20px; height: 20px; color: var(--burgundy); }
@@ -155,20 +176,10 @@ tr:hover td { background: var(--row-hover) !important; }
 .he-btn { width: 30px; height: 30px; border-radius: 6px; border: 1px solid transparent; background: none; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: center; font-family: inherit; transition: all 0.1s; }
 .he-btn:hover { background: #fff; border-color: var(--border); }
 .he-sep { width: 1px; background: var(--border); margin: 2px 4px; align-self: stretch; }
-.html-editor-content { min-height: 150px; padding: 12px 15px; font-size: 17px; font-family: 'Be Vietnam Pro', sans-serif; color: var(--text-main); outline: none; line-height: 1.75; }
+/* ĐÃ SỬA: min-height tăng từ 150px lên 260px */
+.html-editor-content { min-height: 260px; padding: 12px 15px; font-size: 17px; font-family: 'Be Vietnam Pro', sans-serif; color: var(--text-main); outline: none; line-height: 1.75; }
 
-/* Priority selector trong form */
-.priority-opts { display: flex; gap: 10px; }
-.priority-opt { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; border: 1.5px solid var(--border); cursor: pointer; font-size: 15px; font-weight: 700; background: #fff; transition: all 0.15s; flex: 1; justify-content: center; }
-.priority-opt input[type=radio] { display: none; }
-.priority-opt .p-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-.priority-opt.p-khan .p-dot { background: #e74c3c; }
-.priority-opt.p-quan .p-dot { background: #e67e22; }
-.priority-opt.p-binh .p-dot { background: #27ae60; }
-.priority-opt.p-khan.selected { background: #fff0f0; border-color: #f0b8b8; color: #c0392b; }
-.priority-opt.p-quan.selected { background: #fff5ec; border-color: #f5c89a; color: #c05a00; }
-.priority-opt.p-binh.selected { background: #eaf7f0; border-color: #a0d8b0; color: #1a6b3a; }
-.priority-opt:hover:not(.selected) { background: #f5f0e8; }
+
 
 .ndp-wrap { position: relative; }
 .ndp-trigger { height: 42px; border: 1.5px solid var(--input-border); border-radius: 9px; padding: 0 36px 0 13px; font-size: 17px; font-family: inherit; color: var(--text-main); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; transition: border-color 0.15s; user-select: none; position: relative; }
@@ -337,7 +348,7 @@ tr:hover td { background: var(--row-hover) !important; }
           <tr>
             <th class="col-stt">STT</th>
             <th class="col-uutien">Ưu tiên</th>
-            <th class="col-ban">Ban nhận việc</th>
+            <th class="col-ban">Đầu mối phụ trách</th>
             <th class="col-nd">Nội dung giao việc</th>
             <th class="col-han">Thời hạn</th>
             <th class="col-tt">Trạng thái</th>
@@ -376,21 +387,39 @@ tr:hover td { background: var(--row-hover) !important; }
     <div class="modal-body">
       <div class="form-row-2col">
         <div>
-          <div class="add-label">Giao cho ban <span class="req">*</span></div>
+          <div class="add-label">Đầu mối phụ trách <span class="req">*</span></div>
           <select class="add-select" id="gv_ban"><option value="">— Chọn ban —</option></select>
         </div>
         <div>
           <div class="add-label">Mức ưu tiên <span class="req">*</span></div>
-          <div class="priority-opts" id="priorityOpts">
-            <label class="priority-opt p-khan" onclick="setPriority('khan')">
-              <span class="p-dot"></span> Khẩn cấp
-            </label>
-            <label class="priority-opt p-quan" onclick="setPriority('quan')">
-              <span class="p-dot"></span> Quan trọng
-            </label>
-            <label class="priority-opt p-binh selected" onclick="setPriority('binh')">
-              <span class="p-dot"></span> Bình thường
-            </label>
+          <div class="pdd-wrap" id="priorityDdWrap">
+            <div class="pdd-trigger" id="priorityDdTrigger" onclick="togglePdd(event)">
+              <span class="p-dot" id="pddDot"></span>
+              <span id="pddLabel">Bình thường</span>
+              <svg class="pdd-trigger-caret" id="pddCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="pdd-popup" id="priorityDdPopup">
+              <div class="pdd-option" data-val="kqt" onclick="setPriority('kqt',event)">
+                <span class="p-dot" style="background:#c0392b;box-shadow:0 0 0 2px rgba(192,57,43,0.2);"></span>
+                <span class="pdd-option-label">Khẩn cấp &amp; Quan trọng</span>
+                <span class="pdd-radio"></span>
+              </div>
+              <div class="pdd-option" data-val="khan" onclick="setPriority('khan',event)">
+                <span class="p-dot" style="background:#e67e22;box-shadow:0 0 0 2px rgba(230,126,34,0.2);"></span>
+                <span class="pdd-option-label">Khẩn cấp</span>
+                <span class="pdd-radio"></span>
+              </div>
+              <div class="pdd-option" data-val="quan" onclick="setPriority('quan',event)">
+                <span class="p-dot" style="background:#f0c000;box-shadow:0 0 0 2px rgba(240,192,0,0.2);"></span>
+                <span class="pdd-option-label">Quan trọng</span>
+                <span class="pdd-radio"></span>
+              </div>
+              <div class="pdd-option selected" data-val="binh" onclick="setPriority('binh',event)">
+                <span class="p-dot" style="background:#27ae60;box-shadow:0 0 0 2px rgba(39,174,96,0.2);"></span>
+                <span class="pdd-option-label">Bình thường</span>
+                <span class="pdd-radio"></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -536,14 +565,34 @@ function ndpVal(id){const i=ndpI[id];if(!i||!i.sel)return'';return`${i.sel.getFu
 document.addEventListener('click',()=>{if(ndpOpen){ndpOpen=null;Object.keys(ndpI).forEach(id=>rNdp(id));}});
 
 /* ƯU TIÊN */
-const PL={khan:{cls:'p-khan',label:'Khẩn cấp'},quan:{cls:'p-quan',label:'Quan trọng'},binh:{cls:'p-binh',label:'Bình thường'}};
+const PL={
+  kqt:{cls:'p-kqt',label:'Khẩn cấp & Quan trọng',dot:'#c0392b'},
+  khan:{cls:'p-khan',label:'Khẩn cấp',dot:'#e67e22'},
+  quan:{cls:'p-quan',label:'Quan trọng',dot:'#f0c000'},
+  binh:{cls:'p-binh',label:'Bình thường',dot:'#27ae60'}
+};
 let curPriority='binh';
-function setPriority(p){
+let pddOpen=false;
+function togglePdd(e){
+  e.stopPropagation();
+  pddOpen=!pddOpen;
+  document.getElementById('priorityDdPopup').classList.toggle('open',pddOpen);
+  document.getElementById('priorityDdTrigger').classList.toggle('open',pddOpen);
+  document.getElementById('pddCaret').classList.toggle('open',pddOpen);
+}
+function setPriority(p,e){
+  if(e)e.stopPropagation();
   curPriority=p;
-  document.querySelectorAll('.priority-opt').forEach(el=>{
-    el.classList.remove('selected');
-    if(el.classList.contains('p-'+p)) el.classList.add('selected');
+  const info=PL[p]||PL['binh'];
+  document.getElementById('pddLabel').textContent=info.label;
+  document.getElementById('pddDot').style.cssText=`background:${info.dot};box-shadow:0 0 0 2px ${info.dot}33;width:11px;height:11px;border-radius:50%;flex-shrink:0;`;
+  document.querySelectorAll('.pdd-option').forEach(el=>{
+    el.classList.toggle('selected',el.dataset.val===p);
   });
+  pddOpen=false;
+  document.getElementById('priorityDdPopup').classList.remove('open');
+  document.getElementById('priorityDdTrigger').classList.remove('open');
+  document.getElementById('pddCaret').classList.remove('open');
 }
 function priorityBadge(p){
   const info=PL[p]||PL['binh'];
@@ -559,7 +608,7 @@ function banLines(n){const w=n.split(' '),ls=[];for(let i=0;i<w.length;i+=3)ls.p
 function stripHtml(h){const t=document.createElement('div');t.innerHTML=h;return(t.textContent||t.innerText||'').trim();}
 
 let db=[
-  {id:1,ban:'Ban Tri Sự',nd:'<p>Chuẩn bị toàn bộ hội trường lớn tầng 1 cho Đại Lễ Phật Đản. Bao gồm: sắp xếp bàn ghế, hệ thống âm thanh, ánh sáng và trang trí. Hoàn thành trước 18h ngày 13/05/2026.</p>',han:'2026-05-13',tt:'Đang thực hiện',ut:'khan',log:[{tt:'Chưa tiếp nhận',t:'07:00 ngày 14/4 ÂL'},{tt:'Đã tiếp nhận',t:'08:30 ngày 14/4 ÂL'},{tt:'Đang thực hiện',t:'09:00 ngày 15/4 ÂL'}]},
+  {id:1,ban:'Ban Tri Sự',nd:'<p>Chuẩn bị toàn bộ hội trường lớn tầng 1 cho Đại Lễ Phật Đản. Bao gồm: sắp xếp bàn ghế, hệ thống âm thanh, ánh sáng và trang trí. Hoàn thành trước 18h ngày 13/05/2026.</p>',han:'2026-05-13',tt:'Đang thực hiện',ut:'kqt',log:[{tt:'Chưa tiếp nhận',t:'07:00 ngày 14/4 ÂL'},{tt:'Đã tiếp nhận',t:'08:30 ngày 14/4 ÂL'},{tt:'Đang thực hiện',t:'09:00 ngày 15/4 ÂL'}]},
   {id:2,ban:'Ban Vườn',nd:'<p>Trồng thêm 20 cây xanh tại khu vực cổng chính và lối đi dạo. Ưu tiên cây có bóng mát, phù hợp khí hậu địa phương.</p>',han:'2026-05-28',tt:'Chưa tiếp nhận',ut:'binh',log:[{tt:'Chưa tiếp nhận',t:'10:00 ngày 16/4 ÂL'}]},
   {id:3,ban:'Ban Y Tế',nd:'<p>Kiểm tra toàn bộ tủ thuốc trong chùa, lập danh sách thiếu hụt và bổ sung kịp thời trước Đại Lễ. Đặc biệt chú ý thuốc hạ sốt, băng bó và dầu gió.</p>',han:'2026-05-12',tt:'Hoàn thành',ut:'quan',log:[{tt:'Chưa tiếp nhận',t:'08:00 ngày 12/4 ÂL'},{tt:'Đã tiếp nhận',t:'08:45 ngày 12/4 ÂL'},{tt:'Đang thực hiện',t:'14:00 ngày 13/4 ÂL'},{tt:'Hoàn thành',t:'16:30 ngày 14/4 ÂL'}]}
 ];
@@ -629,7 +678,7 @@ function openAddModal(){
   document.getElementById('addSaveBtn').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg> Giao Việc`;
   document.getElementById('gv_ban').selectedIndex=0;
   document.getElementById('gv_noidung').innerHTML='';
-  setPriority('binh');
+  setPriority('binh',null);
   ndpI['gv_thoihan_wrap']=null;createNdp('gv_thoihan_wrap','',null);
   document.getElementById('addModal').classList.add('show');document.body.style.overflow='hidden';
 }
@@ -639,7 +688,7 @@ function openEdit(id){
   document.getElementById('addSaveBtn').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Lưu Thay Đổi`;
   document.getElementById('gv_ban').value=p.ban;
   document.getElementById('gv_noidung').innerHTML=p.nd;
-  setPriority(p.ut||'binh');
+  setPriority(p.ut||'binh',null);
   ndpI['gv_thoihan_wrap']=null;createNdp('gv_thoihan_wrap',p.han||'',null);
   document.getElementById('addModal').classList.add('show');document.body.style.overflow='hidden';
 }
@@ -670,7 +719,7 @@ function openView(id){
     <div class="add-label" style="margin-bottom:8px;">Nội dung giao việc</div>
     <div class="view-noidung">${p.nd||'<i style="color:#8b6a40;">Không có</i>'}</div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="meta-label">Ban nhận việc</div><div class="meta-value" style="font-size:16px;font-weight:700;color:#1a3a8b;line-height:1.6;">${banLines(p.ban)}</div></div>
+      <div class="meta-item"><div class="meta-label">Đầu mối phụ trách</div><div class="meta-value" style="font-size:16px;font-weight:700;color:#1a3a8b;line-height:1.6;">${banLines(p.ban)}</div></div>
       <div class="meta-item"><div class="meta-label">Mức ưu tiên</div><div class="meta-value">${priorityBadge(p.ut||'binh')}</div></div>
       <div class="meta-item"><div class="meta-label">Trạng thái</div><div class="meta-value"><span style="padding:4px 14px;border-radius:20px;font-size:15px;font-weight:700;display:inline-block;" class="${sCls(p.tt)}">${p.tt}</span></div></div>
       <div class="meta-item"><div class="meta-label">Thời hạn (Âm lịch)</div><div class="meta-value" style="font-weight:800;color:#1a6b3a;">${fmtLunar(p.han)}</div></div>
@@ -690,7 +739,7 @@ function showToast(msg,bg='#2d6a4f'){const t=document.getElementById('toast');t.
 
 let udOpen=false;
 function toggleUserMenu(e){e.stopPropagation();udOpen=!udOpen;document.getElementById('udMenu').classList.toggle('open',udOpen);}
-document.addEventListener('click',()=>{udOpen=false;const u=document.getElementById('udMenu');if(u)u.classList.remove('open');});
+document.addEventListener('click',()=>{udOpen=false;const u=document.getElementById('udMenu');if(u)u.classList.remove('open');if(pddOpen){pddOpen=false;const pp=document.getElementById('priorityDdPopup');if(pp)pp.classList.remove('open');const pt=document.getElementById('priorityDdTrigger');if(pt)pt.classList.remove('open');const pc=document.getElementById('pddCaret');if(pc)pc.classList.remove('open');}});
 window.addEventListener('scroll',()=>document.getElementById('backToTop').classList.toggle('visible',window.scrollY>300));
 function heCmd(cmd){document.getElementById('gv_noidung').focus();document.execCommand(cmd,false,null);}
 function heFontSize(dir){
